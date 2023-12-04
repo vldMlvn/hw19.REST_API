@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class NoteServiceWithOneCustomResponse implements BaseNoteService {
+public class NoteServiceWithCustomsResponseWrappedInResponseEntity implements BaseNoteService {
 
     private final NoteRepository repository;
 

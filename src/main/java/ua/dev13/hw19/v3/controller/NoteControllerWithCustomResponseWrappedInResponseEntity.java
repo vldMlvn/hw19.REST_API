@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.*;
 import ua.dev13.hw19.base.controller.BaseNoteController;
 import ua.dev13.hw19.base.entity.Note;
 import ua.dev13.hw19.base.response.CustomResponse;
-import ua.dev13.hw19.v3.service.NoteServiceWithOneCustomResponse;
+import ua.dev13.hw19.v3.service.NoteServiceWithCustomsResponseWrappedInResponseEntity;
 
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v3/notes")
-public class NoteControllerWithOneCustomResponse implements BaseNoteController {
+public class NoteControllerWithCustomResponseWrappedInResponseEntity implements BaseNoteController {
 
-    private final NoteServiceWithOneCustomResponse service;
+    private final NoteServiceWithCustomsResponseWrappedInResponseEntity service;
 
     @Override
     @GetMapping("/list")
