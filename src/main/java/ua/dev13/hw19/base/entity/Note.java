@@ -16,6 +16,12 @@ import java.time.LocalDateTime;
 @Builder
 public class Note {
 
+    public Note(Long id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
