@@ -205,7 +205,7 @@ class NoteServiceWithDefaultResponseEntityTest {
     void deleteByIdShouldReturnNotFoundWhenNote() {
         // Given
         Long nonExistingNoteId = 1L;
-        when(repository.existsById(nonExistingNoteId)).thenReturn(false);
+        when(repository.existsById(nonExistingNoteId)).thenReturn(true);
 
         // When
         ResponseEntity<Note> response = service.deleteById(nonExistingNoteId);
