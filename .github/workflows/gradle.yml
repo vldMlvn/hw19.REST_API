@@ -27,13 +27,6 @@ jobs:
     - name: Build and test with Gradle
       run: ./gradlew build jacocoTestReport
 
-    - name: Check test coverage
-      run: |
-        coverage_percentage=$(grep -Po '(?<=<span class="cover">)[^<]+' build/reports/jacoco/test/html/index.html | tr -d '%')
-        if ((coverage_percentage < 80)); then
-          echo "Warning: Code coverage is less than 80%. This will not fail the build."
-        fi || true
-
     - name: Check that all tests pass
       run: ./gradlew check --stacktrace
 
@@ -42,6 +35,15 @@ jobs:
       with:
         name: jacoco-report
         path: build/reports/jacoco/test/html
+
+    - name: Check test coverage
+      run: |
+        coverage_percentage=$(grep -Po '(?<=<span class="cover">)[^<]+' build/reports/jacoco/test/html/index.html | tr -d '%')
+        if ((coverage_percentage < 80)); then
+          echo "Error: Code coverage is less than 80%."
+          exit 1
+        fi
+
 
 
 
