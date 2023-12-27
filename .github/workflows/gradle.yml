@@ -28,7 +28,12 @@ jobs:
       run: ./gradlew build jacocoTestReport
 
     - name: Check test coverage
-      run: ./gradlew jacocoTestReport
+      run: |
+        coverage_percentage=$(grep -Po '(?<=<span class="cover">)[^<]+' build/reports/jacoco/test/html/index.html | tr -d '%')
+        if (( $(echo "$coverage_percentage < 80" | bc -l) )); then
+          echo "Error: Code coverage is less than 80%."
+          exit 1
+        fi
 
     - name: Check that all tests pass
       run: ./gradlew check --stacktrace
