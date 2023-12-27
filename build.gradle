@@ -40,9 +40,9 @@ dependencies {
 	runtimeOnly 'com.h2database:h2'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
+//tasks.named('test') {
+//	useJUnitPlatform()
+//}
 tasks.named('check') {
 	dependsOn 'test'
 }
