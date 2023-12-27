@@ -27,12 +27,6 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Upload Build Results
-      uses: actions/upload-artifact@v2
-      with:
-        name: build-results
-        path: build
-
   test:
     needs: build
     runs-on: ubuntu-latest
