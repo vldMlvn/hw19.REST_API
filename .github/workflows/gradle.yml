@@ -27,6 +27,9 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build --exclude-task test
 
+    - name: Finalize Build
+      run: echo "Build completed successfully!"
+
   test:
     needs: build
     runs-on: ubuntu-latest
