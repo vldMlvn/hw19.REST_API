@@ -1,13 +1,13 @@
-package ua.dev13.hw19;
+package com.example.springbootdemo;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Hw19Application {
+public class SpringBootDemoApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Hw19Application.class, args);
+        SpringApplication.run(SpringBootDemoApplication.class, args);
     }
 
 }
