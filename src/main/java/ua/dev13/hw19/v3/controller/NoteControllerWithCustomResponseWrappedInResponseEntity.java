@@ -1,49 +1,51 @@
-package ua.dev13.hw19.v3.controller;
+package com.example.demo.controller;
 
-import lombok.RequiredArgsConstructor;
+import com.example.demo.base.controller.BaseNoteController;
+import com.example.demo.base.entity.Note;
+import com.example.demo.base.response.CustomResponse;
+import com.example.demo.service.NoteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ua.dev13.hw19.base.controller.BaseNoteController;
-import ua.dev13.hw19.base.entity.Note;
-import ua.dev13.hw19.base.response.CustomResponse;
-import ua.dev13.hw19.v3.service.NoteServiceWithCustomsResponseWrappedInResponseEntity;
 
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/api/v3/notes")
-public class NoteControllerWithCustomResponseWrappedInResponseEntity implements BaseNoteController {
+public class NoteController implements BaseNoteController {
 
-    private final NoteServiceWithCustomsResponseWrappedInResponseEntity service;
+    private final NoteService noteService;
+
+    public NoteController(NoteService noteService) {
+        this.noteService = noteService;
+    }
 
     @Override
     @GetMapping("/list")
     public ResponseEntity<CustomResponse<List<Note>>> getAllNotes() {
-        return service.getAll();
+        return ResponseEntity.ok(noteService.getAllNotes());
     }
 
     @Override
     @GetMapping("/{id}")
     public ResponseEntity<CustomResponse<Note>> getNoteById(@PathVariable Long id) {
-        return service.getById(id);
+        return ResponseEntity.ok(noteService.getNoteById(id));
     }
 
     @Override
     @PostMapping("/add")
     public ResponseEntity<CustomResponse<Note>> createNote(@RequestBody Note note) {
-        return service.create(note);
+        return ResponseEntity.ok(noteService.createNote(note));
     }
 
     @Override
     @PutMapping("/edit/{id}")
     public ResponseEntity<CustomResponse<Note>> editNoteById(@PathVariable Long id, @RequestBody Note note) {
-        return service.update(note);
+        return ResponseEntity.ok(noteService.updateNote(note));
     }
 
     @Override
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<CustomResponse<Note>> deleteNoteById(@PathVariable Long id) {
-        return service.deleteById(id);
+        return ResponseEntity.ok(noteService.deleteNote(id));
     }
 }
