@@ -1,11 +1,7 @@
 package ua.dev13.hw19.base.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
+import lombok.*;
 import java.time.LocalDateTime;
 
 @Entity
@@ -15,12 +11,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Note {
-
-    public Note(Long id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +23,12 @@ public class Note {
     private String content;
 
     @Column(name = "created_at", nullable = false)
-
     @Builder.Default
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    // constructor without id for creating new Note
+    public Note(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
