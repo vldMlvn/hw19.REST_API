@@ -1,16 +1,18 @@
 package ua.dev13.hw19.base.service;
 
 import ua.dev13.hw19.base.entity.Note;
+import java.util.List;
+import java.util.Optional;
 
-public interface BaseNoteService {
+public interface BaseNoteService<T extends Note> {
 
-    Object getAll();
+    List<T> getAll();
 
-    Object getById(Long id);
+    Optional<T> getById(Long id);
 
-    Object create(Note note);
+    T create(T note);
 
-    Object update(Note note);
+    T update(T note);
 
-    Object deleteById(Long id);
+    void deleteById(Long id);
 }
