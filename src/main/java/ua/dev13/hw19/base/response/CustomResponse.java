@@ -1,13 +1,16 @@
 package ua.dev13.hw19.base.response;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.NonNull;
+import lombok.Value;
 
 @Builder
-@Data
+@Value
 public class CustomResponse<T> {
 
+    @NonNull
     private Error error;
+    @NonNull
     private T entity;
 
     public static <T> CustomResponse<T> success(T entity) {
