@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
-public class NoteServiceWithDefaultResponseEntity implements BaseNoteService {
+public class NoteService implements BaseNoteService {
 
     private final NoteRepository repository;
 
@@ -21,79 +21,49 @@ public class NoteServiceWithDefaultResponseEntity implements BaseNoteService {
     public ResponseEntity<List<Note>> getAll() {
         List<Note> notes = repository.findAll();
         if (notes.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity
-                .status(HttpStatus.OK)
-                .body(notes);
+        return new ResponseEntity<>(notes, HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Note> getById(Long id) {
         Optional<Note> note = repository.findById(id);
         if (!note.isPresent()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
-        } else {
-            return ResponseEntity
-                    .status(HttpStatus.OK)
-                    .body(note.get());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        return new ResponseEntity<>(note.get(), HttpStatus.OK);
     }
 
     @Override
     public ResponseEntity<Note> create(Note note) {
-        if (note.getTitle() == null || note.getTitle().trim().isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build();
-        }
-        if (note.getContent() == null || note.getContent().trim().isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build();
+        if (note.getTitle() == null || note.getTitle().trim().isEmpty() ||
+                note.getContent() == null || note.getContent().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         repository.save(note);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(note);
+        return new ResponseEntity<>(note, HttpStatus.CREATED);
     }
 
     @Override
     public ResponseEntity<Note> update(Note note) {
-        if (note.getTitle() == null || note.getTitle().trim().isEmpty()) {
-            return ResponseEntity.
-                    status(HttpStatus.BAD_REQUEST)
-                    .build();
-        }
-        if (note.getContent() == null || note.getContent().trim().isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .build();
+        if (note.getTitle() == null || note.getTitle().trim().isEmpty() ||
+                note.getContent() == null || note.getContent().trim().isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         if (!repository.existsById(note.getId())) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         Note updatedNote = repository.save(note);
-        return ResponseEntity
-                .status(HttpStatus.ACCEPTED)
-                .body(updatedNote);
+        return new ResponseEntity<>(updatedNote, HttpStatus.ACCEPTED);
     }
 
     @Override
     public ResponseEntity<Note> deleteById(Long id) {
         if (!repository.existsById(id)) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .build();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return ResponseEntity
-                .status(HttpStatus.NO_CONTENT)
-                .build();
+        repository.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
